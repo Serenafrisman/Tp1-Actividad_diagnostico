@@ -1,0 +1,76 @@
+---
+const { rank, title, artist, streams } = Astro.props;
+
+const colors = [
+  { bg: '#ffd6e0', accent: '#ff4d6d' },
+  { bg: '#d6f5e3', accent: '#2d9e5f' },
+  { bg: '#d6e8ff', accent: '#2d6be4' },
+  { bg: '#fff3d6', accent: '#e4a72d' },
+  { bg: '#f0d6ff', accent: '#9b2de4' },
+  { bg: '#ffe8d6', accent: '#e4622d' },
+  { bg: '#d6fff8', accent: '#2de4cc' },
+  { bg: '#ffd6f5', accent: '#e42db3' },
+  { bg: '#e8ffd6', accent: '#6be42d' },
+  { bg: '#d6f0ff', accent: '#2db3e4' },
+];
+
+const color = colors[(rank - 1) % colors.length];
+---
+
+<article class="card" style={`background: ${color.bg}; border-top: 4px solid ${color.accent};`}>
+  <div class="top">
+    <div class="bar" style={`background: ${color.accent};`}></div>
+    <span class="rank" style={`color: ${color.accent};`}>#{rank}</span>
+  </div>
+  <div class="info">
+    <h3>{title}</h3>
+    <p class="artist">{artist}</p>
+    <p class="streams" style={`color: ${color.accent};`}>🎧 {streams}</p>
+  </div>
+</article>
+
+<style>
+  .card {
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s;
+    cursor: pointer;
+    padding: 1rem;
+    border: 2px solid rgba(0,0,0,0.1);
+  }
+  .card:hover {
+    transform: translateY(-3px);
+  }
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.6rem;
+  }
+  .bar {
+    width: 30px;
+    height: 4px;
+    border-radius: 2px;
+  }
+  .rank {
+    font-size: 1.2rem;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+  }
+  h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    font-family: 'Poppins', sans-serif;
+  }
+  .artist {
+    color: #666;
+    font-size: 0.8rem;
+    margin-top: 2px;
+  }
+  .streams {
+    font-size: 0.75rem;
+    margin-top: 6px;
+    font-weight: 500;
+  }
+</style>

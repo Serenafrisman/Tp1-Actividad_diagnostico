@@ -1,17 +1,163 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SongCard from '../components/SongCard.astro';
 
+const songs = [
+  { rank: 1, title: "Die With A Smile", artist: "Lady Gaga & Bruno Mars", streams: "4.2B" },
+  { rank: 2, title: "Espresso", artist: "Sabrina Carpenter", streams: "3.8B" },
+  { rank: 3, title: "APT.", artist: "Rose & Bruno Mars", streams: "3.5B" },
+  { rank: 4, title: "Luther", artist: "Kendrick Lamar & SZA", streams: "3.1B" },
+  { rank: 5, title: "Beautiful Things", artist: "Benson Boone", streams: "2.9B" },
+  { rank: 6, title: "Taste", artist: "Sabrina Carpenter", streams: "2.7B" },
+  { rank: 7, title: "Not Like Us", artist: "Kendrick Lamar", streams: "2.5B" },
+  { rank: 8, title: "Good Luck Babe!", artist: "Chappell Roan", streams: "2.3B" },
+  { rank: 9, title: "BIRDS OF A FEATHER", artist: "Billie Eilish", streams: "2.1B" },
+  { rank: 10, title: "Que Viva La Vida", artist: "Coldplay", streams: "1.9B" },
+];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Top Songs 2025">
+
+  <!-- SECCIÓN 1: Hero -->
+  <header class="hero">
+    
+    <h1>TOP <span>SONGS</span> 2025</h1>
+    <p>Las mejores canciones del ultimo año</p>
+  </header>
+
+  <!-- SECCIÓN 2: Búsqueda -->
+  <section class="filters">
+    <input type="text" id="searchInput" placeholder="🔍 Buscar canción o artista..." />
+  </section>
+
+  <!-- SECCIÓN 3: Grilla -->
+  <main class="grid" id="songsGrid">
+    {songs.map((song) => (
+      <SongCard
+        rank={song.rank}
+        title={song.title}
+        artist={song.artist}
+        streams={song.streams}
+      />
+    ))}
+  </main>
+
+  <!-- SECCIÓN 4: Footer -->
+  <footer>
+    <p>🎵 Top Songs 2025 · Trabajo Práctico Frontend</p>
+  </footer>
+
+</BaseLayout>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;600&display=swap');
+
+:root {
+    --bg: #f5f0ff;
+    --surface: #ffffff;
+    --accent: #8b5cf6;
+    --accent2: #ec4899;
+    --text: #1a1a2e;
+    --muted: #666;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Poppins', sans-serif;
+   background-image: radial-gradient(ellipse at top, #ede9fe 0%, #f5f0ff 60%);
+    min-height: 100vh;
+  }
+
+  .hero {
+    text-align: center;
+    padding: 5rem 1rem 3rem;
+    position: relative;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    padding: 0.3rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    letter-spacing: 1px;
+  }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 12vw, 10rem);
+    letter-spacing: 6px;
+    line-height: 1;
+    background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero span {
+    color: var(--accent);
+    -webkit-text-fill-color: var(--accent);
+  }
+
+  .hero p {
+    color: var(--muted);
+    margin-top: 1rem;
+    font-size: 1rem;
+    letter-spacing: 1px;
+  }
+
+  .filters {
+    padding: 1rem 2rem 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  #searchInput {
+    width: 100%;
+    max-width: 500px;
+    padding: 0.75rem 1.2rem;
+    border-radius: 30px;
+    border: 1px solid #333;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 0.95rem;
+    font-family: 'Poppins', sans-serif;
+    outline: none;
+    transition: border 0.2s;
+  }
+
+  #searchInput:focus {
+    border-color: var(--accent);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.2rem;
+    padding: 2rem;
+  }
+
+  footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--muted);
+    font-size: 0.85rem;
+    border-top: 1px solid #222;
+    margin-top: 2rem;
+  }
+</style>
+
+<script>
+  const input = document.getElementById('searchInput');
+  input.addEventListener('input', (e) => {
+    const q = e.target.value.toLowerCase();
+    document.querySelectorAll('.card').forEach(card => {
+      const text = card.innerText.toLowerCase();
+      card.style.display = text.includes(q) ? 'block' : 'none';
+    });
+  });
+</script>
